@@ -2,6 +2,7 @@
   import Card from '$lib/components/ui/Card.svelte';
   import type { Deck } from '$lib/stores/decks.svelte';
   import { Brain, BookOpen, Flame } from 'lucide-svelte';
+  import { base } from '$app/paths';
 
   let { deck }: { deck: Deck } = $props();
 
@@ -17,7 +18,7 @@
   const overallMastery = $derived(Math.round(deck.cards.reduce((acc, c) => acc + c.mastery, 0) / deck.cards.length));
 </script>
 
-<Card interactive class="flex flex-col h-full cursor-pointer p-5" onclick={() => window.location.href = `/study?deck=${deck.id}`}>
+<Card interactive class="flex flex-col h-full cursor-pointer p-5" onclick={() => window.location.href = `${base}/study?deck=${deck.id}`}>
   <div class="flex items-center justify-between mb-4">
     <div class="w-12 h-12 rounded-[18px] {deck.color} flex items-center justify-center">
       <IconComponent size={24} />

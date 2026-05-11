@@ -3,6 +3,7 @@
   import Button from '$lib/components/ui/Button.svelte';
   import { Brain, ChevronRight } from 'lucide-svelte';
   import type { Deck } from '$lib/stores/decks.svelte';
+  import { base } from '$app/paths';
 
   let { deck }: { deck: Deck } = $props();
 </script>
@@ -21,7 +22,7 @@
     </div>
   </div>
   
-  <Button variant="primary" class="w-full mt-2" onclick={() => window.location.href = '/study'}>
+  <Button variant="primary" class="w-full mt-2" onclick={() => window.location.href = `${base}/study`}>
     <span>Study Now</span>
     <ChevronRight size={18} class="ml-1" />
   </Button>

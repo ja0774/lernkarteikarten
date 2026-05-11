@@ -1,11 +1,12 @@
 <script lang="ts">
   import { Home, BookOpen, BarChart3, User, LogOut, Settings } from 'lucide-svelte';
   import { page } from '$app/stores';
+  import { base } from '$app/paths';
 
   const navItems = [
-    { id: 'dashboard', path: '/', icon: Home, label: 'Dashboard' },
-    { id: 'library', path: '/library', icon: BookOpen, label: 'Library' },
-    { id: 'stats', path: '/stats', icon: BarChart3, label: 'Statistics' },
+    { id: 'dashboard', path: base || '/', icon: Home, label: 'Dashboard' },
+    { id: 'library', path: `${base}/library`, icon: BookOpen, label: 'Library' },
+    { id: 'stats', path: `${base}/stats`, icon: BarChart3, label: 'Statistics' },
   ];
 
   let currentPath = $derived($page.url.pathname);
@@ -26,7 +27,7 @@
   <nav class="flex-1 px-4 py-6 flex flex-col gap-2">
     <div class="text-xs font-bold text-muted uppercase tracking-wider px-2 mb-2">Menu</div>
     {#each navItems as item}
-      {@const isActive = currentPath === item.path || (item.path !== '/' && currentPath.startsWith(item.path))}
+      {@const isActive = currentPath === item.path || (item.path !== (base || '/') && currentPath.startsWith(item.path))}
       <a 
         href={item.path}
         class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 group relative overflow-hidden {isActive ? 'bg-lavender text-primary font-bold' : 'text-muted hover:bg-gray-50 hover:text-text-dark font-medium'}"
@@ -40,7 +41,7 @@
   <!-- User Profile & Settings Area at Bottom -->
   <div class="p-4 border-t border-border-subtle/50">
     <div class="flex flex-col gap-2">
-      <a href="/profile" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-gray-50 transition-colors cursor-pointer {currentPath.startsWith('/profile') ? 'bg-lavender text-primary' : 'text-text-dark'}">
+      <a href="{base}/profile" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-gray-50 transition-colors cursor-pointer {currentPath.startsWith(`${base}/profile`) ? 'bg-lavender text-primary' : 'text-text-dark'}">
         <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-primary to-accent text-white flex items-center justify-center text-xs font-bold shadow-sm">
           JL
         </div>

@@ -3,6 +3,7 @@
   import UpNextDeck from '$lib/components/dashboard/UpNextDeck.svelte';
   import GlobalRanking from '$lib/components/dashboard/GlobalRanking.svelte';
   import { decksStore } from '$lib/stores/decks.svelte';
+  import { base } from '$app/paths';
   
   // Just grabbing the first deck for 'Up Next'
   const nextDeck = $derived(decksStore.decks[0]);
@@ -43,7 +44,7 @@
          </div>
          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
            {#each decksStore.decks.slice(0, 2) as deck}
-             <div class="bg-white border border-border-subtle rounded-[24px] p-5 shadow-sm hover:shadow-floating transition-all cursor-pointer" onclick={() => window.location.href=`/study?deck=${deck.id}`}>
+             <div class="bg-white border border-border-subtle rounded-[24px] p-5 shadow-sm hover:shadow-floating transition-all cursor-pointer" onclick={() => window.location.href=`${base}/study?deck=${deck.id}`}>
                <div class="flex items-center gap-3 mb-3">
                  <div class="w-12 h-12 rounded-[18px] {deck.color} flex items-center justify-center">
                     <span class="text-white font-bold text-xl">{deck.title.charAt(0)}</span>

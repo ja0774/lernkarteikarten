@@ -3,6 +3,7 @@
   import Flashcard from '$lib/components/study/Flashcard.svelte';
   import Button from '$lib/components/ui/Button.svelte';
   import { X, Flag, Pencil, RotateCcw } from 'lucide-svelte';
+  import { base } from '$app/paths';
   
   // Use first deck if none selected (for demo)
   const activeDeck = $derived(
@@ -29,7 +30,7 @@
       }, 150); // wait for flip back animation before changing content
     } else {
       // Finished deck
-      window.location.href = '/';
+      window.location.href = base || '/';
     }
   }
 </script>
