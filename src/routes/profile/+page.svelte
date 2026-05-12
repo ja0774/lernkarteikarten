@@ -3,6 +3,7 @@
   import Button from '$lib/components/ui/Button.svelte';
   import { Settings, Bell, Shield, LogOut, ChevronRight } from 'lucide-svelte';
   import { authStore } from '$lib/stores/auth.svelte';
+  import { base } from '$app/paths';
 </script>
 
 <div class="px-6 py-10 lg:py-12 flex flex-col max-w-5xl gap-8 animate-fade-up mx-auto w-full">
@@ -30,7 +31,10 @@
       
       <div class="h-px bg-border-subtle my-2"></div>
       
-      <button class="w-full flex items-center gap-3 p-3 rounded-xl text-red-500 hover:bg-red-50 font-medium transition-colors text-left" onclick={() => authStore.signOut()}>
+      <button class="w-full flex items-center gap-3 p-3 rounded-xl text-red-500 hover:bg-red-50 font-medium transition-colors text-left" onclick={async () => {
+        await authStore.signOut();
+        window.location.href = `${base}/login`;
+      }}>
         <LogOut size={20} />
         <span>Log Out</span>
       </button>
