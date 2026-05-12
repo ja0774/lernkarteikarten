@@ -2,6 +2,7 @@
   import { Home, BookOpen, BarChart3, User, LogOut, Settings } from 'lucide-svelte';
   import { page } from '$app/stores';
   import { base } from '$app/paths';
+  import { authStore } from '$lib/stores/auth.svelte';
 
   const navItems = [
     { id: 'dashboard', path: base || '/', icon: Home, label: 'Dashboard' },
@@ -10,6 +11,11 @@
   ];
 
   let currentPath = $derived($page.url.pathname);
+  
+  async function handleLogout() {
+    await authStore.signOut();
+    window.location.href = `${base}/login`;
+  }
 </script>
 
 <aside class="w-64 bg-surface border-r border-border-subtle h-full flex-col hidden md:flex">
@@ -43,18 +49,18 @@
     <div class="flex flex-col gap-2">
       <a href="{base}/profile" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-gray-50 transition-colors cursor-pointer {currentPath.startsWith(`${base}/profile`) ? 'bg-lavender text-primary' : 'text-text-dark'}">
         <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-primary to-accent text-white flex items-center justify-center text-xs font-bold shadow-sm">
-          JL
+          {authStore.user?.email?.[0].toUpperCase() ?? 'J'}
         </div>
-        <div class="flex flex-col">
-          <span class="text-sm font-bold leading-tight">Jana Lindtner</span>
-          <span class="text-xs text-primary font-bold leading-tight">Pro Member</span>
+        <div class="flex flex-col overflow-hidden">
+          <span class="text-sm font-bold leading-tight truncate">{authStore.user?.email?.split('@')[0] ?? 'User'}</span>
+          <span class="text-[10px] text-muted font-bold leading-tight truncate">{authStore.user?.email ?? 'Free Tier'}</span>
         </div>
       </a>
       <button class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-muted hover:bg-gray-50 hover:text-text-dark transition-colors font-medium">
         <Settings size={18} strokeWidth={2} />
         <span class="text-sm">Settings</span>
       </button>
-      <button class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-red-400 hover:bg-red-50 hover:text-red-500 transition-colors font-medium">
+      <button class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-red-400 hover:bg-red-50 hover:text-red-500 transition-colors font-medium" onclick={handleLogout}>
         <LogOut size={18} strokeWidth={2} />
         <span class="text-sm">Log out</span>
       </button>

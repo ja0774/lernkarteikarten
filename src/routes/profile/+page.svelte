@@ -2,6 +2,7 @@
   import Card from '$lib/components/ui/Card.svelte';
   import Button from '$lib/components/ui/Button.svelte';
   import { Settings, Bell, Shield, LogOut, ChevronRight } from 'lucide-svelte';
+  import { authStore } from '$lib/stores/auth.svelte';
 </script>
 
 <div class="px-6 py-10 lg:py-12 flex flex-col max-w-5xl gap-8 animate-fade-up mx-auto w-full">
@@ -29,7 +30,7 @@
       
       <div class="h-px bg-border-subtle my-2"></div>
       
-      <button class="w-full flex items-center gap-3 p-3 rounded-xl text-red-500 hover:bg-red-50 font-medium transition-colors text-left">
+      <button class="w-full flex items-center gap-3 p-3 rounded-xl text-red-500 hover:bg-red-50 font-medium transition-colors text-left" onclick={() => authStore.signOut()}>
         <LogOut size={20} />
         <span>Log Out</span>
       </button>
@@ -43,11 +44,11 @@
         <Card class="p-6">
           <div class="flex flex-col sm:flex-row items-center sm:items-start gap-6">
             <div class="w-24 h-24 rounded-full bg-gradient-to-tr from-primary to-accent shadow-soft border-4 border-white flex items-center justify-center text-white font-bold text-3xl shrink-0">
-              JL
+              {authStore.user?.email?.[0].toUpperCase() ?? 'J'}
             </div>
             <div class="flex flex-col items-center sm:items-start flex-1 w-full">
-              <h3 class="text-2xl font-bold text-text-dark tracking-tight">Jana Lindtner</h3>
-              <p class="text-muted font-medium mb-4">jana.lindtner@student.uni.edu</p>
+              <h3 class="text-2xl font-bold text-text-dark tracking-tight">{authStore.user?.email?.split('@')[0] ?? 'User'}</h3>
+              <p class="text-muted font-medium mb-4">{authStore.user?.email ?? 'user@example.com'}</p>
               
               <div class="flex items-center gap-3 w-full sm:w-auto">
                 <span class="text-primary font-bold text-sm bg-lavender px-4 py-2 rounded-full">Pro Member</span>
