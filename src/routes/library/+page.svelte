@@ -1,3 +1,4 @@
+<script lang="ts">
   import { Search, BookOpen, Plus } from 'lucide-svelte';
   import { decksStore } from '$lib/stores/decks.svelte';
   import DeckCard from '$lib/components/library/DeckCard.svelte';
