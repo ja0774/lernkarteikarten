@@ -88,6 +88,57 @@ class DecksStore {
     }
   }
 
+  async deleteDeck(deckId: string) {
+    if (!authStore.user) return;
+    
+    const { error } = await supabase
+      .from('decks')
+      .delete()
+      .eq('id', deckId);
+
+    if (!error) {
+      this.decks = this.decks.filter(d => d.id !== deckId);
+    }
+  }
+
+  async addCard(deckId: string, front: string, back: string) {
+    if (!authStore.user) return;
+
+    const { data, error } = await supabase
+      .from('cards')
+      .insert([{ deck_id: deckId, front, back, mastery: 0 }])
+      .select()
+      .single();
+
+    if (!error && data) {
+      this.decks = this.decks.map(d => {
+        if (d.id === deckId) {
+          return { ...d, cards: [...d.cards, data] };
+        }
+        return d;
+      });
+      return data;
+    } else if (error) {
+      console.error('Error adding card:', error);
+    }
+  }
+
+  async deleteCard(cardId: string) {
+    if (!authStore.user) return;
+
+    const { error } = await supabase
+      .from('cards')
+      .delete()
+      .eq('id', cardId);
+
+    if (!error) {
+      this.decks = this.decks.map(d => ({
+        ...d,
+        cards: d.cards.filter(c => c.id !== cardId)
+      }));
+    }
+  }
+
   async updateCardMastery(cardId: string, mastery: number) {
     // If it's a demo card, just update locally
     if (cardId.startsWith('1-') || cardId.startsWith('demo-')) {
