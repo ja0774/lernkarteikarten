@@ -15,7 +15,7 @@
 
 <!-- The outer container providing 3D perspective -->
 <div 
-  class="relative w-full aspect-[3/4] perspective-1000 cursor-pointer"
+  class="relative w-full max-w-xl mx-auto aspect-[3/2] perspective-1000 cursor-pointer"
   onclick={onFlip}
   role="button"
   tabindex="0"
@@ -27,16 +27,16 @@
   >
     
     <!-- Front Face -->
-    <Card class="absolute inset-0 backface-hidden flex flex-col items-center justify-center p-8 text-center bg-surface border-2 border-transparent hover:border-border-subtle transition-colors shadow-floating m-0 rounded-[40px]">
-      <span class="text-sm font-bold text-primary tracking-widest uppercase mb-auto opacity-70">Question</span>
-      <h2 class="text-2xl font-bold text-text-dark leading-snug">{card.front}</h2>
-      <div class="mt-auto opacity-40 text-sm font-medium text-muted">Tap to reveal</div>
+    <Card class="absolute inset-0 backface-hidden flex flex-col items-center justify-center p-10 text-center bg-surface border-2 border-transparent hover:border-border-subtle transition-colors shadow-floating m-0 rounded-[40px]">
+      <span class="absolute top-8 text-xs font-black text-primary/50 tracking-[0.2em] uppercase">Question</span>
+      <h2 class="text-2xl md:text-3xl font-bold text-text-dark leading-tight">{card.front}</h2>
+      <div class="absolute bottom-8 opacity-40 text-xs font-bold text-muted uppercase tracking-widest">Tap to reveal</div>
     </Card>
 
     <!-- Back Face -->
-    <Card class="absolute inset-0 backface-hidden rotate-y-180 flex flex-col items-center justify-center p-8 text-center bg-lavender border-2 border-primary/20 shadow-floating m-0 rounded-[40px]">
-      <span class="text-sm font-bold text-primary tracking-widest uppercase mb-auto opacity-70">Answer</span>
-      <h2 class="text-xl font-bold text-text-dark leading-relaxed">{card.back}</h2>
+    <Card class="absolute inset-0 backface-hidden rotate-y-180 flex flex-col items-center justify-center p-10 text-center bg-lavender border-2 border-primary/20 shadow-floating m-0 rounded-[40px]">
+      <span class="absolute top-8 text-xs font-black text-primary/50 tracking-[0.2em] uppercase">Answer</span>
+      <h2 class="text-2xl md:text-3xl font-bold text-text-dark leading-relaxed">{card.back}</h2>
     </Card>
 
   </div>
