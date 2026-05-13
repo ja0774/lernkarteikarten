@@ -11,6 +11,8 @@
   ];
 
   let currentPath = $derived($page.url.pathname);
+  const userName = $derived(authStore.user?.email?.split('@')[0] ?? 'Explorer');
+  const userInitial = $derived(authStore.user?.email?.[0].toUpperCase() ?? 'U');
   
   async function handleLogout() {
     await authStore.signOut();
@@ -19,13 +21,16 @@
 </script>
 
 <aside class="w-64 bg-surface border-r border-border-subtle h-full flex-col hidden md:flex">
-  <!-- Logo Area -->
+  <!-- Profile/Brand Area -->
   <div class="h-20 flex items-center px-6 border-b border-border-subtle/50">
     <div class="flex items-center gap-3">
-      <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-primary to-accent flex items-center justify-center text-white font-bold text-lg shadow-soft">
-        L
+      <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-primary to-accent flex items-center justify-center text-white font-black text-lg shadow-soft">
+        {userInitial}
       </div>
-      <span class="font-bold text-xl tracking-tight text-text-dark">Lumina</span>
+      <div class="flex flex-col">
+        <span class="font-black text-lg tracking-tight text-text-dark leading-tight truncate max-w-[140px] capitalize">{userName}</span>
+        <span class="text-[10px] font-bold text-primary uppercase tracking-widest leading-tight">Pro Member</span>
+      </div>
     </div>
   </div>
 
