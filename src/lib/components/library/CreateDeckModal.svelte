@@ -1,7 +1,7 @@
 <script lang="ts">
   import { decksStore } from '$lib/stores/decks.svelte';
   import Button from '$lib/components/ui/Button.svelte';
-  import { X, Plus, Brain, BookOpen, Flame, Atom } from 'lucide-svelte';
+  import { X, Plus, Brain, BookOpen, Flame, Atom, Languages, Music, Calculator, Globe } from 'lucide-svelte';
 
   let { isOpen, onclose } = $props<{ isOpen: boolean, onclose: () => void }>();
 
@@ -15,7 +15,13 @@
     { name: 'Brain', icon: Brain },
     { name: 'Flame', icon: Flame },
     { name: 'Atom', icon: Atom },
+    { name: 'Languages', icon: Languages },
+    { name: 'Music', icon: Music },
+    { name: 'Calculator', icon: Calculator },
+    { name: 'Globe', icon: Globe },
   ];
+
+  const emojis = ['🚀', '🎨', '⚽', '🍕', '💡', '🧪', '🌍', '🎸', '📱', '🎮'];
 
   async function handleSubmit() {
     if (!title) return;
@@ -73,14 +79,25 @@
         </div>
 
         <div>
-          <label class="text-sm font-bold text-muted uppercase tracking-wider mb-3 block">Choose Icon</label>
-          <div class="flex gap-4">
+          <label class="text-sm font-bold text-muted uppercase tracking-wider mb-3 block">Choose Icon or Emoji</label>
+          <div class="flex flex-wrap gap-3">
             {#each icons as { name, icon: Icon }}
               <button 
                 onclick={() => selectedIcon = name}
-                class="w-12 h-12 rounded-xl flex items-center justify-center transition-all {selectedIcon === name ? 'bg-primary text-white shadow-lg shadow-primary/30' : 'bg-gray-50 text-muted hover:bg-gray-100'}"
+                class="w-10 h-10 rounded-xl flex items-center justify-center transition-all {selectedIcon === name ? 'bg-primary text-white shadow-lg shadow-primary/30 scale-110' : 'bg-gray-50 text-muted hover:bg-gray-100'}"
               >
-                <Icon size={20} />
+                <Icon size={18} />
+              </button>
+            {/each}
+            
+            <div class="w-full h-px bg-border-subtle my-1"></div>
+            
+            {#each emojis as emoji}
+              <button 
+                onclick={() => selectedIcon = emoji}
+                class="w-10 h-10 rounded-xl flex items-center justify-center text-xl transition-all {selectedIcon === emoji ? 'bg-primary text-white shadow-lg shadow-primary/30 scale-110' : 'bg-gray-50 hover:bg-gray-100'}"
+              >
+                {emoji}
               </button>
             {/each}
           </div>
