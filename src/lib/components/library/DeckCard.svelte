@@ -1,20 +1,24 @@
 <script lang="ts">
   import Card from '$lib/components/ui/Card.svelte';
   import { decksStore, type Deck } from '$lib/stores/decks.svelte';
-  import { Brain, BookOpen, Flame, Plus, Trash2 } from 'lucide-svelte';
+  import { Brain, BookOpen, Flame, Atom, Languages, Music, Calculator, Globe, Plus, Trash2 } from 'lucide-svelte';
   import { base } from '$app/paths';
 
   let { deck, onAddCard }: { deck: Deck, onAddCard: (id: string) => void } = $props();
 
-  const getIcon = (name: string) => {
-    switch (name) {
-      case 'Brain': return Brain;
-      case 'Flame': return Flame;
-      default: return BookOpen;
-    }
+  const lucideIcons: Record<string, any> = {
+    'Brain': Brain,
+    'BookOpen': BookOpen,
+    'Flame': Flame,
+    'Atom': Atom,
+    'Languages': Languages,
+    'Music': Music,
+    'Calculator': Calculator,
+    'Globe': Globe
   };
 
-  const IconComponent = $derived(getIcon(deck.icon));
+  const IconComponent = $derived(lucideIcons[deck.icon]);
+  const isEmoji = $derived(!lucideIcons[deck.icon]);
   const overallMastery = $derived(deck.cards.length > 0 
     ? Math.round(deck.cards.reduce((acc, c) => acc + c.mastery, 0) / deck.cards.length)
     : 0
@@ -36,7 +40,11 @@
 <Card interactive class="flex flex-col h-full cursor-pointer p-5 relative group" onclick={() => window.location.href = `${base}/study?deck=${deck.id}`}>
   <div class="flex items-center justify-between mb-4">
     <div class="w-12 h-12 rounded-[18px] {deck.color} flex items-center justify-center">
-      <IconComponent size={24} />
+      {#if isEmoji}
+        <span class="text-2xl">{deck.icon}</span>
+      {:else if IconComponent}
+        <IconComponent size={24} />
+      {/if}
     </div>
     
     <div class="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
