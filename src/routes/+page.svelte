@@ -3,6 +3,8 @@
   import UpNextDeck from '$lib/components/dashboard/UpNextDeck.svelte';
   import GlobalRanking from '$lib/components/dashboard/GlobalRanking.svelte';
   import { authStore } from '$lib/stores/auth.svelte';
+  import { decksStore } from '$lib/stores/decks.svelte';
+  import { base } from '$app/paths';
   
   // Just grabbing the first deck for 'Up Next'
   const nextDeck = $derived(decksStore.decks[0]);
