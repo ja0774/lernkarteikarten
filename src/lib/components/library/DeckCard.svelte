@@ -1,3 +1,4 @@
+<script lang="ts">
   import Card from '$lib/components/ui/Card.svelte';
   import { decksStore, type Deck } from '$lib/stores/decks.svelte';
   import { Brain, BookOpen, Flame, Plus, Trash2 } from 'lucide-svelte';
