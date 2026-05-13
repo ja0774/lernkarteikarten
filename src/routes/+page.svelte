@@ -2,11 +2,12 @@
   import DailyGoal from '$lib/components/dashboard/DailyGoal.svelte';
   import UpNextDeck from '$lib/components/dashboard/UpNextDeck.svelte';
   import GlobalRanking from '$lib/components/dashboard/GlobalRanking.svelte';
-  import { decksStore } from '$lib/stores/decks.svelte';
-  import { base } from '$app/paths';
+  import { authStore } from '$lib/stores/auth.svelte';
   
   // Just grabbing the first deck for 'Up Next'
   const nextDeck = $derived(decksStore.decks[0]);
+  const userName = $derived(authStore.user?.email?.split('@')[0] ?? 'Explorer');
+  const userInitial = $derived(authStore.user?.email?.[0].toUpperCase() ?? 'U');
 </script>
 
 <div class="px-6 py-10 lg:py-12 flex flex-col gap-8 animate-fade-up">
@@ -14,12 +15,14 @@
   <!-- Header -->
   <header class="flex items-center justify-between">
     <div>
-      <h1 class="text-3xl md:text-4xl font-bold text-text-dark tracking-tight">Good morning,</h1>
+      <h1 class="text-3xl md:text-4xl font-bold text-text-dark tracking-tight">
+        Good morning, <span class="text-primary">{userName}</span>
+      </h1>
       <p class="text-lg md:text-xl text-muted font-medium mt-1">Ready to build momentum?</p>
     </div>
     <!-- Profile avatar only visible on mobile as it is in the sidebar on desktop -->
     <div class="md:hidden w-12 h-12 rounded-full bg-gradient-to-tr from-primary to-accent shadow-soft border-2 border-white flex items-center justify-center text-white font-bold text-lg">
-      JL
+      {userInitial}
     </div>
   </header>
 
