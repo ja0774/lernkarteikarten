@@ -33,7 +33,7 @@
   }
 
   async function handleVerifyOtp() {
-    if (!otpCode || otpCode.length !== 6) return;
+    if (!otpCode || (otpCode.length !== 6 && otpCode.length !== 8)) return;
     isLoading = true;
     errorMsg = null;
 
@@ -126,17 +126,17 @@
             <input 
               id="otp"
               type="text" 
-              maxlength="6"
+              maxlength="8"
               bind:value={otpCode}
               placeholder="000 000" 
-              class="w-full bg-gray-50/50 border border-border-subtle text-text-dark text-center text-2xl tracking-[0.5em] font-bold rounded-xl py-4 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+              class="w-full bg-gray-50/50 border border-border-subtle text-text-dark text-center text-2xl tracking-[0.2em] font-bold rounded-xl py-4 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
             />
             {#if errorMsg}
               <p class="text-red-500 text-xs font-bold mt-2 text-center">{errorMsg}</p>
             {/if}
           </div>
 
-          <Button variant="primary" class="w-full py-4" onclick={handleVerifyOtp} disabled={isLoading || otpCode.length !== 6}>
+          <Button variant="primary" class="w-full py-4" onclick={handleVerifyOtp} disabled={isLoading || (otpCode.length !== 6 && otpCode.length !== 8)}>
             {#if isLoading}
               <Loader2 size={20} class="animate-spin mr-2" />
               <span>Verifying...</span>
